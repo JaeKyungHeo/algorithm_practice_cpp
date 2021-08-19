@@ -130,34 +130,6 @@ int main(void) {
 //	}
 //};
 //
-//struct X
-//{
-//	int x;
-//	int index;
-//};
-//
-//struct Y
-//{
-//	int y;
-//	int index;
-//};
-//
-//
-//struct Z
-//{
-//	int z;
-//	int index;
-//};
-//
-//
-//struct D
-//{
-//	int d;
-//	int index1;
-//	int index2;
-//};
-//
-//
 //int parent[100001];
 //
 //int find(int index) {
