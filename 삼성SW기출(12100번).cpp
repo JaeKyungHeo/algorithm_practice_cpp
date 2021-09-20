@@ -1,0 +1,219 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+//조건
+//번호가 써져있는 블록 이동시키기
+//이동하는 방향 젤 앞에 있는 것부터 처리해줌
+//NxN보드사이즈(1~20)
+//한쪽 방향으로 이동했을 때 해당방향으로 인접해있으면서 같은 수를 가지고 있어야 합쳐짐
+//입력: N(1~20) 보드 각 칸의 값(0은 빈칸)
+//출력: 최대 5회 이동 후 최대값이 가장 큰 수
+
+int N;
+int board[21][21];
+int M = 0;
+
+void solution(int n, int m) {
+	if (n == 0) {
+		if (m > M) {
+			M = m;
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < N; j++) {
+					cout << board[i][j] << ' ';
+				}
+				cout << '\n';
+			}
+			cout << '\n';
+		}
+
+		return;
+	}
+	int sub[21][21];
+	vector<int>a;
+	vector<int>b;
+	//위
+	//copy
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++)
+			sub[i][j] = board[i][j];
+	}
+	//1. 한쪽으로 밀기
+	//2. 0이 아닌 숫자만 추출
+	//3. 연속된 두 숫자를 비교하며 같은 수라면 앞쪽으로 합침(뒤에 수는 0으로 갱신) 
+	//4. 그러고 다시 0을 빈칸 취급하여 한쪽을 밀기
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			if (board[j][i] > 0)
+				a.push_back(board[j][i]);
+		}
+		for (int j = 1; j < a.size(); j++) {
+			if (a[j - 1] == a[j]) {
+				b.push_back(2 * a[j - 1]);
+				if (m < 2 * a[j - 1]) {
+					m = 2 * a[j - 1];
+					for (int i = 0; i < N; i++) {
+						for (int j = 0; j < N; j++) {
+							cout << board[i][j] << ' ';
+						}
+						cout << '\n';
+					}
+					cout << '\n';
+				}
+				a[j] = 0;
+			}
+			else if(a[j-1] != 0)
+				b.push_back(a[j - 1]);
+		}
+
+		for (int j = 0; j < b.size(); j++)
+			board[j][i] = b[j];
+		for (int j = b.size(); j < N; j++)
+			board[j][i] = 0;
+		a.clear();
+		b.clear();
+	}
+	solution(n - 1, m);
+	//복원
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++)
+			board[i][j] = sub[i][j];
+	}
+
+
+
+	//아래
+	for (int i = 0; i < N; i++) {
+		for (int j = N-1; j>=0; j--) {
+			if (board[j][i] > 0)
+				a.push_back(board[j][i]);
+		}
+		for (int j = 1; j < a.size(); j++) {
+			if (a[j - 1] == a[j]) {
+				b.push_back(2 * a[j - 1]);
+				if (m < 2 * a[j - 1]) {
+					m = 2 * a[j - 1];
+					for (int i = 0; i < N; i++) {
+						for (int j = 0; j < N; j++) {
+							cout << board[i][j] << ' ';
+						}
+						cout << '\n';
+					}
+					cout << '\n';
+				}
+				a[j] = 0;
+			}
+			else if (a[j - 1] != 0)
+				b.push_back(a[j - 1]);
+		}
+
+		for (int j = 0; j < b.size(); j++)
+			board[N-1-j][i] = b[j];
+		for (int j = b.size(); j < N; j++)
+			board[N-1-j][i] = 0;
+		a.clear();
+		b.clear();
+	}
+	
+	solution(n - 1,m);
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++)
+			board[i][j] = sub[i][j];
+	}
+
+	//왼쪽
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			if (board[i][j] > 0)
+				a.push_back(board[i][j]);
+		}
+		for (int j = 1; j < a.size(); j++) {
+			if (a[j - 1] == a[j]) {
+				b.push_back(2 * a[j - 1]);
+				if (m < 2 * a[j - 1]) {
+					m = 2 * a[j - 1];
+					for (int i = 0; i < N; i++) {
+						for (int j = 0; j < N; j++) {
+							cout << board[i][j] << ' ';
+						}
+						cout << '\n';
+					}
+					cout << '\n';
+				}
+				a[j] = 0;
+			}
+			else if (a[j - 1] != 0)
+				b.push_back(a[j - 1]);
+		}
+
+		for (int j = 0; j < b.size(); j++)
+			board[i][j] = b[j];
+		for (int j = b.size(); j < N; j++)
+			board[i][j] = 0;
+		a.clear();
+		b.clear();
+	}
+
+	solution(n - 1, m);
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++)
+			board[i][j] = sub[i][j];
+	}
+
+	//오른쪽
+	for (int i = 0; i < N; i++) {
+		for (int j = N-1; j>=0; j--) {
+			if (board[i][j] > 0)
+				a.push_back(board[i][j]);
+		}
+		for (int j = 1; j < a.size(); j++) {
+			if (a[j - 1] == a[j]) {
+				b.push_back(2 * a[j - 1]);
+				if (m < 2 * a[j - 1]) {
+					m = 2 * a[j - 1];
+					for (int i = 0; i < N; i++) {
+						for (int j = 0; j < N; j++) {
+							cout << board[i][j]<<' ';
+						}
+						cout << '\n';
+					}
+					cout << '\n';
+				}
+				a[j] = 0;
+			}
+			else if (a[j - 1] != 0)
+				b.push_back(a[j - 1]);
+		}
+
+		for (int j = 0; j < b.size(); j++)
+			board[i][N-1-j] = b[j];
+		for (int j = b.size(); j < N; j++)
+			board[i][N-1-j] = 0;
+		a.clear();
+		b.clear();
+	}
+
+	solution(n - 1,m);
+
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(0); cout.tie(0);
+	int max = 0;
+	cin >> N;
+
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			cin >> board[i][j];
+			if (max < board[i][j])
+				max = board[i][j];
+		}
+	}
+
+	solution(5, max);
+	cout << M;
+
+	return 0;
+}
