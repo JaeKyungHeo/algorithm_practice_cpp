@@ -17,17 +17,8 @@ int M = 0;
 
 void solution(int n, int m) {
 	if (n == 0) {
-		if (m > M) {
+		if (m > M)
 			M = m;
-			for (int i = 0; i < N; i++) {
-				for (int j = 0; j < N; j++) {
-					cout << board[i][j] << ' ';
-				}
-				cout << '\n';
-			}
-			cout << '\n';
-		}
-
 		return;
 	}
 	int sub[21][21];
@@ -44,6 +35,7 @@ void solution(int n, int m) {
 	//3. 연속된 두 숫자를 비교하며 같은 수라면 앞쪽으로 합침(뒤에 수는 0으로 갱신) 
 	//4. 그러고 다시 0을 빈칸 취급하여 한쪽을 밀기
 	for (int i = 0; i < N; i++) {
+		//한쪽 열을 잡고 0이 아닌 수를 벡터로 받는다.(접근에 비효율이 있음)
 		for (int j = 0; j < N; j++) {
 			if (board[j][i] > 0)
 				a.push_back(board[j][i]);
@@ -51,20 +43,16 @@ void solution(int n, int m) {
 		for (int j = 1; j < a.size(); j++) {
 			if (a[j - 1] == a[j]) {
 				b.push_back(2 * a[j - 1]);
-				if (m < 2 * a[j - 1]) {
+				if (m < 2 * a[j - 1]) 
 					m = 2 * a[j - 1];
-					for (int i = 0; i < N; i++) {
-						for (int j = 0; j < N; j++) {
-							cout << board[i][j] << ' ';
-						}
-						cout << '\n';
-					}
-					cout << '\n';
-				}
 				a[j] = 0;
 			}
 			else if(a[j-1] != 0)
 				b.push_back(a[j - 1]);
+			//마지막 부분까지 확인
+			if (j == a.size() - 1 && a[j] > 0) {
+				b.push_back(a[j]);
+			}
 		}
 
 		for (int j = 0; j < b.size(); j++)
@@ -87,25 +75,21 @@ void solution(int n, int m) {
 	for (int i = 0; i < N; i++) {
 		for (int j = N-1; j>=0; j--) {
 			if (board[j][i] > 0)
-				a.push_back(board[j][i]);
+				a.push_back(board[j][i]);//a벡터에는 0이 아닌 정수가 들어감
 		}
 		for (int j = 1; j < a.size(); j++) {
 			if (a[j - 1] == a[j]) {
 				b.push_back(2 * a[j - 1]);
-				if (m < 2 * a[j - 1]) {
+				if (m < 2 * a[j - 1])
 					m = 2 * a[j - 1];
-					for (int i = 0; i < N; i++) {
-						for (int j = 0; j < N; j++) {
-							cout << board[i][j] << ' ';
-						}
-						cout << '\n';
-					}
-					cout << '\n';
-				}
 				a[j] = 0;
 			}
-			else if (a[j - 1] != 0)
+			else if (a[j - 1] != 0)//인접한 같은 수를 합쳐준 뒤 다시한번 0이 아닌 수를 b벡터에 담아줌
 				b.push_back(a[j - 1]);
+			//마지막 부분까지 확인
+			if (j == a.size() - 1 && a[j] > 0) {
+				b.push_back(a[j]);
+			}
 		}
 
 		for (int j = 0; j < b.size(); j++)
@@ -131,20 +115,16 @@ void solution(int n, int m) {
 		for (int j = 1; j < a.size(); j++) {
 			if (a[j - 1] == a[j]) {
 				b.push_back(2 * a[j - 1]);
-				if (m < 2 * a[j - 1]) {
+				if (m < 2 * a[j - 1])
 					m = 2 * a[j - 1];
-					for (int i = 0; i < N; i++) {
-						for (int j = 0; j < N; j++) {
-							cout << board[i][j] << ' ';
-						}
-						cout << '\n';
-					}
-					cout << '\n';
-				}
 				a[j] = 0;
 			}
 			else if (a[j - 1] != 0)
 				b.push_back(a[j - 1]);
+			//마지막 부분까지 확인
+			if (j == a.size() - 1 && a[j] > 0) {
+				b.push_back(a[j]);
+			}
 		}
 
 		for (int j = 0; j < b.size(); j++)
@@ -170,20 +150,16 @@ void solution(int n, int m) {
 		for (int j = 1; j < a.size(); j++) {
 			if (a[j - 1] == a[j]) {
 				b.push_back(2 * a[j - 1]);
-				if (m < 2 * a[j - 1]) {
+				if (m < 2 * a[j - 1])
 					m = 2 * a[j - 1];
-					for (int i = 0; i < N; i++) {
-						for (int j = 0; j < N; j++) {
-							cout << board[i][j]<<' ';
-						}
-						cout << '\n';
-					}
-					cout << '\n';
-				}
 				a[j] = 0;
 			}
 			else if (a[j - 1] != 0)
 				b.push_back(a[j - 1]);
+			//마지막 부분까지 확인
+			if (j == a.size() - 1 && a[j] > 0) {
+				b.push_back(a[j]);
+			}
 		}
 
 		for (int j = 0; j < b.size(); j++)
