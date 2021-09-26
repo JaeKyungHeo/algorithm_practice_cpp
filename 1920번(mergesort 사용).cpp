@@ -4,11 +4,11 @@
 using namespace std;
 
 int S[100001];
-int i, j, k, t;
 
 void merge(int low, int mid, int high) {
 	vector<int>u;
-	i = low;j = mid + 1;k = 0;
+	int i = low;
+	int j = mid + 1;
 	while (i <= mid && j <= high) {
 		if (S[i] < S[j]) {
 			u.push_back(S[i]);
@@ -19,20 +19,23 @@ void merge(int low, int mid, int high) {
 			j++;
 		}
 	}
-	for (t = j; t <= high; t++)
+	for (int t = i; t <= mid; t++)
 		u.push_back(S[t]);
-	for (t = i; t <= mid; t++)
+	for (int t = j; t <= high; t++)
 		u.push_back(S[t]);
-	for (t = low; t <= high; t++)
-		S[t] = u[t - low];
+
+	for (int t = 0; t < u.size(); t++)
+		S[t + low] = u[t];
 }
 
 void mergeSort(int low, int high) {
 	if (low < high) {
+		//쪼게주기
 		int mid = (low + high) / 2;
-		mergeSort(low, mid);
-		mergeSort(mid + 1, high);
-		merge(low, mid, high);
+		mergeSort(low, mid);//앞부분
+		mergeSort(mid + 1, high);//뒤부분
+		
+		merge(low, mid, high);//병합
 	}
 }
 
@@ -59,12 +62,13 @@ int main() {
 
 	int N, M, k;
 	cin >> N;
-	for (i = 1; i <= N; i++)
+	for (int i = 1; i <= N; i++)
 		cin >> S[i];
+
 	mergeSort(1, N);
 
 	cin >> M;
-	for (i = 0; i < M; i++) {
+	for (int i = 0; i < M; i++) {
 		cin >> k;
 		BS(1, N, k);
 	}
